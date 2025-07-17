@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './CadastroForm.css'; // Importa o CSS para estilização
 
 // Componente principal do formulário de cadastro
 function CadastroForm() {
@@ -10,6 +11,7 @@ function CadastroForm() {
   });
   // Estado para armazenar mensagens de erro
   const [erro, setErro] = useState('');
+  const [validacao, setValidacao] = useState({});
 
   // Função chamada ao alterar qualquer campo do formulário
   const handleChange = (e) => {
@@ -17,13 +19,36 @@ function CadastroForm() {
     setErro(''); // Limpa mensagem de erro ao digitar
   };
 
+  const validarEmail = (email) => {
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regexEmail.test(email) ? '' : 'Email inválido';
+  };
+
+  const validarSenha = (senha) => {
+    if (senha.length < 6) {
+      return 'A senha deve ter pelo menos 6 caracteres';
+    }
+    // Adicione outras validações conforme necessário, como:
+    // - Pelo menos um número
+    // - Pelo menos um caractere especial
+    // - etc.
+    return '';
+  };
+
   // Função chamada ao enviar o formulário
   const handleSubmit = (e) => {
     e.preventDefault(); // Evita o recarregamento da página
-    // Validação: verifica se todos os campos estão preenchidos
-    if (!form.nome || !form.email || !form.senha) {
-      setErro('Todos os campos são obrigatórios!');
-      return;
+    let erros = {};
+    erros.email = validarEmail(form.email);
+    erros.senha = validarSenha(form.senha);
+    setValidacao(erros);
+
+    if (form.nome.trim() === '') {
+      setErro('O nome é obrigatório.');
+      return; // Impede o envio se o nome estiver vazio
+    } else if (erros.email || erros.senha) {
+      setErro('Por favor, corrija os erros de validação.');
+      return; // Impede o envio se houver erros de validação
     }
     // Aqui você pode enviar os dados para uma API ou mostrar um alerta
     alert('Cadastro realizado com sucesso!');
@@ -31,44 +56,46 @@ function CadastroForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{ maxWidth: 300, margin: 'auto' }}>
+    <form onSubmit={handleSubmit}>
       <h2>Cadastro</h2>
-      <div style={{ marginBottom: '16px' }}>
+      <div className="form-group">
         <label>Nome:</label>
         {/* Campo de texto para o nome do usuário */}
         <input
           type="text"
           name="nome"
+          placeholder="Digite seu nome"
           value={form.nome}
           onChange={handleChange}
-          style={{ width: '100%', padding: '8px', marginTop: '4px' }}
         />
       </div>
-      <div style={{ marginBottom: '16px' }}>
+      <div className="form-group">
         <label>Email:</label>
         {/* Campo de texto para o e-mail do usuário */}
         <input
           type="email"
           name="email"
+          placeholder="Digite seu email"
           value={form.email}
           onChange={handleChange}
-          style={{ width: '100%', padding: '8px', marginTop: '4px' }}
         />
+        {validacao.email && <p className="error-message">{validacao.email}</p>}
       </div>
-      <div style={{ marginBottom: '16px' }}>
+      <div className="form-group">
         <label>Senha:</label>
         {/* Campo de senha para o usuário */}
         <input
           type="password"
           name="senha"
+          placeholder="Crie uma senha"
           value={form.senha}
           onChange={handleChange}
-          style={{ width: '100%', padding: '8px', marginTop: '4px' }}
         />
+        {validacao.senha && <p className="error-message">{validacao.senha}</p>}
       </div>
       {/* Exibe mensagem de erro se houver */}
-      {erro && <p style={{ color: 'red' }}>{erro}</p>}
-      <button type="submit">Cadastrar</button>
+      {erro && <p className="error-message">{erro}</p>}
+      <button className="cadastrar-button" type="submit">Cadastrar</button>
     </form>
   );
 }

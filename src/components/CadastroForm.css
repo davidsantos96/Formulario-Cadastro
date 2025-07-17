@@ -1,0 +1,77 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 20px; /* Adiciona um respiro nas laterais em telas menores */
+  box-sizing: border-box;
+}
+
+.cadastrar-button {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 10px; /* Espaço entre o último campo/erro e o botão */
+  transition: background-color 0.3s;
+}
+
+.cadastrar-button:hover {
+  background-color: #0056b3;
+}
+
+form {
+  background-color: white;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px; /* Um pouco mais largo para mais conforto */
+  box-sizing: border-box;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 30px; /* Aumenta espaço abaixo do título */
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 25px; /* Aumenta o espaço entre os campos */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box; /* Garante que padding não afete a largura total */
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.error-message {
+  color: #d93025;
+  font-size: 0.875em;
+  margin-top: 6px;
+}
